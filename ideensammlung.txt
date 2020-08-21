@@ -1,0 +1,11 @@
+- Dynamische Baby Care Stationen Nice to have
+- Eingabe nach Zeit
+- Verschiedene Level
+- Ausgabe Eltern fordern Kind nach Zeit (zufällig lange?)
+- Es gibt eine Ablage station für die babies (man kann nicht über babies laufen)
+- Care stationen sind automatisch
+- Wenn Babies lange nicht beschäftig werden schreien diese, welches die Geduld der anderen Babies kürzt
+- Wenn die Geduld eines Babies am Ende ist kriegt man keine Punkte bei der Abgabe (vielleicht auch weniger bei unterschiedlicher Geduld)
+- Verschieden "Gegener-Typen" (baby) welche darstellen wie viel aufmerksamkeit ein Baby grundsätzlich braucht (nice to have)
+- Baby beruhigen wenn man es in die arme nimmt(?) Nice to have
+- 
