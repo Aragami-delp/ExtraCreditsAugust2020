@@ -23,7 +23,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        m_canPickUp = Input.GetKey(KeyCode.E);
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            m_canPickUp = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            m_canPickUp = false;
+        }
+
+
         if (m_itemInHand != null && Input.GetKeyDown(KeyCode.Q))
         {
             this.DropItem();
@@ -67,6 +76,7 @@ public class PlayerController : MonoBehaviour
             Item retVal = m_itemInHand;
             m_itemInHand.transform.parent = null;
             m_itemInHand = null;
+            retVal.DropItem();
             return retVal;
         }
         else
@@ -79,7 +89,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_other.CompareTag("Item") && m_canPickUp)
         {
-            PickUpItem(_other.GetComponent<Item>());
+            m_canPickUp = false;
+            PickUpItem(_other.GetComponent<Item>().PickItem());
         }
     }
 }
