@@ -10,12 +10,14 @@ public class Baby : MonoBehaviour
 
     private Mother mother;
     private List<INeed> needs = new List<INeed>();
+    [HideInInspector] public Collider2D m_collider;
 
 
     // Start is called before the first frame update
     void Start()
     {
         needs.Add(new NeedHunger(10f));
+        m_collider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
