@@ -49,11 +49,11 @@ public class PlayerController : MonoBehaviour
             m_somethingInHand = true;
             m_babyInHand = _other.GetComponent<Baby>();
             m_babyInHand.transform.parent = handTransform;
-            m_babyInHand.transform.position = handTransform.position;
             // Disable collider
             m_thingInHandCollider = _other;
             // Disabled collider cant be found with GetComponent() ? therefor it needs to be stored
             m_thingInHandCollider.enabled = false;
+            m_babyInHand.transform.position = handTransform.position;
         }
         else
         {

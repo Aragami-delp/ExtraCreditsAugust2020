@@ -4,19 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Baby : MonoBehaviour
+public class Baby : Item
 {
     public bool isCrying = false;
 
     private Mother mother;
-    private List<INeed> needs = new List<INeed>();
+    private List<Need> needs = new List<Need>();
     [HideInInspector] public Collider2D m_collider;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        needs.Add(new NeedHunger(10f));
+        needs.Add(new Need(ENeedType.Hunger,10f));
         m_collider = GetComponent<Collider2D>();
     }
 
@@ -35,7 +35,7 @@ public class Baby : MonoBehaviour
 
     public bool needsArentMet()
     {
-        foreach (INeed need in needs)
+        foreach (Need need in needs)
         {
             if (!need.isMet()) {
                 return true;
@@ -46,7 +46,7 @@ public class Baby : MonoBehaviour
 
     private void updateNeeds()
     {
-        foreach (INeed need in needs)
+        foreach (Need need in needs)
         {
             need.removeTime(Time.deltaTime);
         }
@@ -56,5 +56,16 @@ public class Baby : MonoBehaviour
     public Mother GetMother()
     {
         return mother;
+    }
+
+    public override Item PickItem()
+    {
+        m_collider.enabled = false;
+        return this;
+    }
+
+    public override void DropItem()
+    {
+        m_collider.enabled = true;
     }
 }
