@@ -7,14 +7,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Baby.Need
 {
-    class NeedHunger : INeed
+    public class Need
     {
+        private ENeedType type;
+
         private float maxTime;
         private float timeLeft;
 
 
-        public NeedHunger(float maxTime)
+        public Need(ENeedType type , float maxTime)
         {
+            this.type = type;
             this.maxTime = maxTime;
             this.timeLeft = maxTime;
 
@@ -39,6 +42,11 @@ namespace Assets.Scripts.Baby.Need
             else {
                 return false;
             }
+        }
+
+        public ENeedType getType()
+        {
+            return type;
         }
 
         public void refreshTime()
