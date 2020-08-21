@@ -2,20 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, InspectorName("Movement Speed"), Tooltip("The movement speed multiplier of the player")]
     private float speed = 1f;
 
     private Rigidbody2D m_rig;
 
-    [SerializeField] private Transform handTransform;
-    private Baby m_babyInHand; // For example a Baby
-    private bool m_somethingInHand;
+    [SerializeField, Tooltip("Position where items should be held at")] private Transform handTransform;
+    public Item m_itemInHand { get; private set; } // For example a Baby
     private bool m_canPickUp = false; // Pickup is needed in collision, but OnCollisionStay2D isn't called each frame so input will also be asked in Update
-    private Collider2D m_thingInHandCollider;
 
     private void Start()
     {
@@ -25,9 +24,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         m_canPickUp = Input.GetKey(KeyCode.E);
-        if (m_somethingInHand && Input.GetKeyDown(KeyCode.Q))
+        if (m_itemInHand != null && Input.GetKeyDown(KeyCode.Q))
         {
-            this.DropBaby();
+            this.DropItem();
         }
     }
 
@@ -38,68 +37,49 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Picks up the Baby
+    /// Picks up an Item
     /// </summary>
-    /// <param name="_other">Collider of the Baby</param>
-    public void PickUpBaby(Collider2D _other)
+    /// <param name="_other">Collider of the Item</param>
+    public void PickUpItem(Item _other)
     {
         Debug.Log("PickUp");
-        if (!m_somethingInHand)
+        if (m_itemInHand == null)
         {
-            m_somethingInHand = true;
-            m_babyInHand = _other.GetComponent<Baby>();
-            m_babyInHand.transform.parent = handTransform;
-            // Disable collider
-            m_thingInHandCollider = _other;
-            // Disabled collider cant be found with GetComponent() ? therefor it needs to be stored
-            m_thingInHandCollider.enabled = false;
-            m_babyInHand.transform.position = handTransform.position;
+            m_itemInHand = _other;
+            m_itemInHand.transform.parent = handTransform;
+            m_itemInHand.transform.position = handTransform.position;
         }
         else
         {
-            Debug.LogError("Already " + m_babyInHand.name + " in Hand");
+            Debug.LogError("Already " + m_itemInHand.name + " in Hand");
         }
     }
 
     /// <summary>
-    /// Drops the baby out of the players Hand
+    /// Returns the Item from the players hand and removes them from the player
     /// </summary>
-    /// <param name="_enableCollider">Should the collider be enabled after drop</param>
-    private void DropBaby(bool _enableCollider = true)
+    /// <returns>Item the player is currently holding</returns>
+    public Item DropItem()
     {
         Debug.Log("Drop");
-        if (m_somethingInHand)
+        if (m_itemInHand != null)
         {
-            m_somethingInHand = false;
-            m_babyInHand.transform.parent = null;
-            m_babyInHand = null;
-            // Enable Collider
-            if (_enableCollider)
-                m_thingInHandCollider.enabled = true;
-            m_thingInHandCollider = null;
+            Item retVal = m_itemInHand;
+            m_itemInHand.transform.parent = null;
+            m_itemInHand = null;
+            return retVal;
         }
         else
         {
-            Debug.LogWarning("Nothing to Drop");
+            throw new NullReferenceException("Player doesn't have an Item!");
         }
     }
 
-    /// <summary>
-    /// Returns the baby and removes it from the players hand
-    /// </summary>
-    /// <returns>Baby that just happend to be in the Players Hand</returns>
-    public Baby GiveBaby()
+    private void OnTriggerStay2D(Collider2D _other)
     {
-        Baby retVal = m_babyInHand;
-        DropBaby(false);
-        return retVal;
-    }
-
-    private void OnCollisionStay2D(Collision2D _other)
-    {
-        if (_other.collider.CompareTag("Baby") && m_canPickUp)
+        if (_other.CompareTag("Item") && m_canPickUp)
         {
-            PickUpBaby(_other.collider);
+            PickUpItem(_other.GetComponent<Item>());
         }
     }
 }
