@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Baby.Need;
+﻿using Assets.Scripts.Baby;
+using Assets.Scripts.Baby.Need;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,7 +59,7 @@ public abstract class AbstractBaby : Item
         return false;
     }
 
-    public void satisfyNeed(string type)
+    public void satisfyNeed(ENeedType type)
     {
         foreach (Need need in needs)
         {
