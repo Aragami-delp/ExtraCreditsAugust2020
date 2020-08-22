@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
     public float minTimeBetweenMothers = 5f;
     public StorageZone starterZone;
     public StorageZone returnZone;
+#pragma warning disable CS0649
     [SerializeField] private GameObject babyPrefab;
+#pragma warning disable CS0649
     [SerializeField] private GameObject motherPrefab;
 
     private float timeUntilNextMother = 0f;
@@ -108,12 +110,14 @@ public class GameManager : MonoBehaviour
                     if (mothers[i].isMyBaby(returnZone.getItem(0)))
                     {
                         //Here should be a point System that adds points if the baby isn't crying
+                        Mother pickUpMother = mothers[i];
                         mothers.RemoveAt(i);
                         GameObject baby = returnZone.getItem(0);
 
                         returnZone.removeItem(baby);
                         Destroy(baby);
                         Debug.Log("Picked up baby");
+                        Destroy(pickUpMother);
                     }
                 }
                 break;
