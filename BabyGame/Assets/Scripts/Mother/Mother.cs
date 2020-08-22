@@ -5,9 +5,8 @@ using UnityEngine;
 public class Mother
 {
     private EMotherState state = EMotherState.GIVE_UP_LINE;
-    private Baby baby;
-
-    private float maxTimeUntilReturn = 20f;
+    private GameObject baby = null;
+    private float maxTimeUntilReturn = 5f; // change to random value
     private float timeLeftUntilReturn;
 
     public Mother()
@@ -22,17 +21,23 @@ public class Mother
         if (timeLeftUntilReturn < 0)
         {
             state = EMotherState.RETURN_LINE;
+            Debug.Log("Mother State PickUp");
         }
     }
 
-    public void setBaby(Baby baby)
+    public void setBaby(GameObject baby)
     {
         this.baby = baby;
     }
     
-    public Baby getBaby()
+    public GameObject getBaby()
     {
         return baby;
+    }
+
+    public bool isMyBaby(GameObject gameObject)
+    {
+        return gameObject.Equals(baby);
     }
 
     public void setState(EMotherState state)

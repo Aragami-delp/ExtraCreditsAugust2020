@@ -29,8 +29,22 @@ public class GameManager : MonoBehaviour
     {
         generateNewMother();
         fillUpStarterZone();
+        mockMove();
         updateMotherTime();
         pickUpReturnZone();
+    }
+
+    private void mockMove()
+    {
+        if (starterZone.isFull() && !returnZone.isFull())
+        {
+            GameObject baby = starterZone.getItem(0);
+
+            returnZone.addItem(baby);
+            starterZone.removeItem(baby);
+
+            Debug.Log("Moved baby to return zone");
+        }
     }
 
     private void generateNewMother()
@@ -39,6 +53,7 @@ public class GameManager : MonoBehaviour
         {
             mothers.Add(new Mother());
             timeUntilNextMother = Random.Range(minTimeBetweenMothers, maxTimeBetweenMothers);
+            Debug.Log("Generated new Mother");
         }
         else
         {
@@ -53,11 +68,13 @@ public class GameManager : MonoBehaviour
             {
                 if (mother.getState().Equals(EMotherState.GIVE_UP_LINE))
                 {
-                    Baby baby = generateBaby();
+                    GameObject baby = generateBaby();
                     mother.setBaby(baby);
                     mother.setState(EMotherState.AWAY);
+                    starterZone.addItem(baby);
 
-                    starterZone.setItem(baby);
+                    Debug.Log(baby);
+                    Debug.Log("Set Baby on starter Zone");
                 break;
                 }
             }
@@ -80,15 +97,19 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < mothers.Count; i++)
         {
-            if (mothers[i].getState().Equals(EMotherState.GIVE_UP_LINE))
+            if (mothers[i].getState().Equals(EMotherState.RETURN_LINE))
             {
                 if (returnZone.isFull())
                 {
-                    if (mothers[i].getBaby().Equals(returnZone.getItem()))
+                    if (mothers[i].isMyBaby(returnZone.getItem(0)))
                     {
                         //Here should be a point System that adds points if the baby isn't crying
                         mothers.RemoveAt(i);
-                        returnZone.setItem(null);
+                        GameObject baby = returnZone.getItem(0);
+
+                        returnZone.removeItem(baby);
+                        Destroy(baby);
+                        Debug.Log("Picked up baby");
                     }
                 }
                 break;
@@ -97,8 +118,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private Baby generateBaby()
+    private GameObject generateBaby()
     {
-        return null;
+        //Later with prefabs
+        GameObject gameObject = new GameObject();
+        gameObject.AddComponent<DefaultBaby>();
+
+        return gameObject;
     }
 }

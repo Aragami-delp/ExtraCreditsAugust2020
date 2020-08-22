@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StorageZone : MonoBehaviour
 {
-
-    private Item item = null;
+    public int maxSize = 1;
+    public List<GameObject> itemList = new List<GameObject>(0);
     // Start is called before the first frame update
     void Start()
     {
@@ -18,18 +18,39 @@ public class StorageZone : MonoBehaviour
         
     }
 
-    public void setItem(Item item)
+    public bool addItem(GameObject item)
     {
-        this.item = item;
+        if (item.GetComponent<Item>() != null && !isFull())
+        {
+            this.itemList.Add(item);
+            return true;
+        }
+        else
+        {
+            Debug.Log("NOT SAME");
+            return false;
+        }
     }
 
-    public Item getItem()
+    public bool removeItem(GameObject item)
     {
-        return item;
+        return itemList.Remove(item);
+    }
+
+    public GameObject getItem(int index)
+    {
+        if (index >= 0 && index < maxSize)
+        {
+            return itemList[index];
+        }
+        else
+        {
+            throw new System.ArgumentException();
+        }
     }
 
     public bool isFull()
     {
-        return item != null;
+        return itemList.Count >= maxSize;
     }
 }

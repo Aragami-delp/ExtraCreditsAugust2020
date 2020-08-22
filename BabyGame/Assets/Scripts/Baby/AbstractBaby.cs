@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractBaby : MonoBehaviour
+public abstract class AbstractBaby : Item
 {
     public float needCryingmMultiplier = 2.5f;
     public float needDefaulMultipliert = 1f;
@@ -11,6 +11,13 @@ public abstract class AbstractBaby : MonoBehaviour
 
     private Mother mother;
     private List<Need> needs = new List<Need>();
+    [HideInInspector] public Collider2D m_collider;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_collider = GetComponent<Collider2D>();
+    }
 
     void FixedUpdate()
     {
@@ -79,5 +86,16 @@ public abstract class AbstractBaby : MonoBehaviour
     public Mother getMother()
     {
         return mother;
+    }
+
+    public override Item PickItem()
+    {
+        m_collider.enabled = false;
+        return this;
+    }
+
+    public override void DropItem()
+    {
+        m_collider.enabled = true;
     }
 }
