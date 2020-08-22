@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +47,14 @@ public class StorageZone : MonoBehaviour
         else
         {
             throw new System.ArgumentException();
+        }
+    }
+
+    public List<GameObject> getItems
+    {
+        get
+        {
+            return itemList;
         }
     }
 

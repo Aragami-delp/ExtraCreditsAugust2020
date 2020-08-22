@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mother
+public class Mother : MonoBehaviour
 {
     private EMotherState state = EMotherState.GIVE_UP_LINE;
     private GameObject baby = null;
@@ -21,6 +21,7 @@ public class Mother
         if (timeLeftUntilReturn < 0)
         {
             state = EMotherState.RETURN_LINE;
+            this.transform.position = GameManager.Instance.returnZone.transform.position;
             Debug.Log("Mother State PickUp");
         }
     }
