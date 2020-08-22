@@ -15,7 +15,7 @@ public abstract class AbstractBaby : Item
     [HideInInspector] public Collider2D m_collider;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         m_collider = GetComponent<Collider2D>();
     }

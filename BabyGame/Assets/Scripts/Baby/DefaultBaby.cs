@@ -1,11 +1,13 @@
 ﻿using Assets.Scripts.Baby;
 using Assets.Scripts.Baby.Need;
+using UnityEngine;
 
 
 class DefaultBaby : AbstractBaby
 {
-    void Start()
+    public override void Start()
     {
+        base.Start();
         addNeed(new Need(ENeedType.Hunger, 10));
     }
 
