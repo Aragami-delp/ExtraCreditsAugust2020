@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mother : MonoBehaviour
 {
     private EMotherState state = EMotherState.GIVE_UP_LINE;
-    private GameObject baby = null;
+    private AbstractBaby baby = null;
     private float maxTimeUntilReturn = 5f; // change to random value
     private float timeLeftUntilReturn;
 
@@ -26,17 +26,17 @@ public class Mother : MonoBehaviour
         }
     }
 
-    public void setBaby(GameObject baby)
+    public void setBaby(AbstractBaby baby)
     {
         this.baby = baby;
     }
     
-    public GameObject getBaby()
+    public AbstractBaby getBaby()
     {
         return baby;
     }
 
-    public bool isMyBaby(GameObject gameObject)
+    public bool isMyBaby(AbstractBaby baby)
     {
         return gameObject.Equals(baby);
     }

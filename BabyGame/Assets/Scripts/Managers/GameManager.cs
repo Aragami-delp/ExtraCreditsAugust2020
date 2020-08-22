@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         if (starterZone.isFull() && !returnZone.isFull())
         {
-            GameObject baby = starterZone.getItem(0);
+            Item baby = starterZone.getItem(0);
 
             starterZone.removeItem(baby);
             returnZone.addItem(baby);
@@ -75,9 +75,9 @@ public class GameManager : MonoBehaviour
                 if (mother.getState().Equals(EMotherState.GIVE_UP_LINE))
                 {
                     GameObject baby = generateBaby();
-                    mother.setBaby(baby);
+                    mother.setBaby(baby.GetComponent<AbstractBaby>());
                     mother.setState(EMotherState.AWAY);
-                    starterZone.addItem(baby);
+                    starterZone.addItem(baby.GetComponent<Item>());
 
                     Debug.Log(baby);
                     Debug.Log("Set Baby on starter Zone");
@@ -107,17 +107,17 @@ public class GameManager : MonoBehaviour
             {
                 if (returnZone.isFull())
                 {
-                    if (mothers[i].isMyBaby(returnZone.getItem(0)))
+                    if (mothers[i].isMyBaby((AbstractBaby) returnZone.getItem(0)))
                     {
                         //Here should be a point System that adds points if the baby isn't crying
                         Mother pickUpMother = mothers[i];
                         mothers.RemoveAt(i);
-                        GameObject baby = returnZone.getItem(0);
+                        Item baby = returnZone.getItem(0);
 
                         returnZone.removeItem(baby);
                         Destroy(baby);
                         Debug.Log("Picked up baby");
-                        Destroy(pickUpMother);
+                        Destroy(pickUpMother.gameObject);
                     }
                 }
                 break;

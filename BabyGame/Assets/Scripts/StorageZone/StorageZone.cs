@@ -6,7 +6,7 @@ using UnityEngine;
 public class StorageZone : MonoBehaviour
 {
     public int maxSize = 1;
-    public List<GameObject> itemList = new List<GameObject>(0);
+    public List<Item> itemList = new List<Item>(0);
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class StorageZone : MonoBehaviour
         
     }
 
-    public bool addItem(GameObject item)
+    public bool addItem(Item item)
     {
         if (item.GetComponent<Item>() != null && !isFull())
         {
@@ -33,12 +33,12 @@ public class StorageZone : MonoBehaviour
         }
     }
 
-    public bool removeItem(GameObject item)
+    public bool removeItem(Item item)
     {
         return itemList.Remove(item);
     }
 
-    public GameObject getItem(int index)
+    public Item getItem(int index)
     {
         if (index >= 0 && index < maxSize)
         {
@@ -50,7 +50,7 @@ public class StorageZone : MonoBehaviour
         }
     }
 
-    public List<GameObject> getItems
+    public List<Item> getItems
     {
         get
         {
