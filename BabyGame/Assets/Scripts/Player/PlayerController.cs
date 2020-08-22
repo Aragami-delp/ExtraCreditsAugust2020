@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_rig;
 
+    private Collider2D toInteract = null;
+
 #pragma warning disable CS0649
     [SerializeField, Tooltip("Position where items should be held at")] private Transform handTransform;
     public Item m_itemInHand { get; private set; } // For example a Baby
@@ -26,11 +28,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            m_canPickUp = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            m_canPickUp = false;
+            if (toInteract.CompareTag("Item"))
+            {
+                m_canPickUp = false;
+                PickUpItem(toInteract.GetComponent<Item>().PickItem());
+            }
+            else if (toInteract.CompareTag("StorageZone"))
+            {
+                m_canPickUp = false;
+                PickUpItem(toInteract.GetComponent<StorageZone>().pickItem());
+            }
         }
 
 
@@ -76,8 +83,17 @@ public class PlayerController : MonoBehaviour
         {
             Item retVal = m_itemInHand;
             m_itemInHand.transform.parent = null;
+            
+            if (toInteract != null && toInteract.CompareTag("StorageZone"))
+            {
+                toInteract.GetComponent<StorageZone>().dropItem(retVal);
+            }
+            else
+            {
+                retVal.DropItem();
+            }
+
             m_itemInHand = null;
-            retVal.DropItem();
             return retVal;
         }
         else
@@ -86,12 +102,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D _other)
+    private void OnTriggerEnter2D(Collider2D _other)
     {
-        if (_other.CompareTag("Item") && m_canPickUp)
-        {
-            m_canPickUp = false;
-            PickUpItem(_other.GetComponent<Item>().PickItem());
-        }
+        toInteract = _other;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        toInteract = null;
     }
 }

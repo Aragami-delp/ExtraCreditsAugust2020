@@ -6,6 +6,11 @@ public class Diaper : Item
 {
     [HideInInspector] public Collider2D m_collider;
 
+    public virtual void Start()
+    {
+        m_collider = GetComponent<Collider2D>();
+    }
+
     public override Item PickItem()
     {
         m_collider.enabled = false;
@@ -15,12 +20,6 @@ public class Diaper : Item
     public override void DropItem()
     {
         m_collider.enabled = true;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_collider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame

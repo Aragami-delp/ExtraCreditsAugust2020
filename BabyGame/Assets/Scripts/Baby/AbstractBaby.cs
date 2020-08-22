@@ -47,7 +47,7 @@ public abstract class AbstractBaby : Item
         return false;
     }
 
-    public bool hasNeed(string type)
+    public bool hasNeed(ENeedType type)
     {
         foreach (Need need in needs)
         {

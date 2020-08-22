@@ -62,4 +62,14 @@ public class StorageZone : MonoBehaviour
     {
         return itemList.Count >= maxSize;
     }
+
+    public virtual Item pickItem()
+    {
+        return null;
+    }
+
+    public virtual bool dropItem(Item item)
+    {
+        return true;
+    }
 }
