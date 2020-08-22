@@ -28,7 +28,7 @@ public class Baby : Item
 
         if (isCrying)
         {
-            Debug.Log("Baby is crying");
+            //Debug.Log("Baby is crying");
         }
     }
 

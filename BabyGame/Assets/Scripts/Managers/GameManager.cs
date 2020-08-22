@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public float minTimeBetweenMothers = 5f;
     public StorageZone starterZone;
     public StorageZone returnZone;
+    [SerializeField] private GameObject babyPrefab;
+    [SerializeField] private GameObject motherPrefab;
 
     private float timeUntilNextMother = 0f;
     private List<Mother> mothers = new List<Mother>();
@@ -40,8 +42,9 @@ public class GameManager : MonoBehaviour
         {
             GameObject baby = starterZone.getItem(0);
 
-            returnZone.addItem(baby);
             starterZone.removeItem(baby);
+            returnZone.addItem(baby);
+            baby.transform.position = returnZone.transform.position;
 
             Debug.Log("Moved baby to return zone");
         }
@@ -51,7 +54,8 @@ public class GameManager : MonoBehaviour
     {
         if (timeUntilNextMother < 0)
         {
-            mothers.Add(new Mother());
+            Mother newMother = Instantiate(motherPrefab, starterZone.transform.position, new Quaternion()).GetComponent<Mother>();
+            mothers.Add(newMother);
             timeUntilNextMother = Random.Range(minTimeBetweenMothers, maxTimeBetweenMothers);
             Debug.Log("Generated new Mother");
         }
@@ -121,8 +125,7 @@ public class GameManager : MonoBehaviour
     private GameObject generateBaby()
     {
         //Later with prefabs
-        GameObject gameObject = new GameObject();
-        gameObject.AddComponent<DefaultBaby>();
+        GameObject gameObject = Instantiate(babyPrefab, starterZone.transform.position, new Quaternion());
 
         return gameObject;
     }
