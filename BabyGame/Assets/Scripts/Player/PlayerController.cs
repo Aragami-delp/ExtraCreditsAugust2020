@@ -86,7 +86,10 @@ public class PlayerController : MonoBehaviour
             
             if (toInteract != null && toInteract.CompareTag("StorageZone"))
             {
-                toInteract.GetComponent<StorageZone>().dropItem(retVal);
+                if (!toInteract.GetComponent<StorageZone>().dropItem(retVal))
+                {
+                    retVal.DropItem();
+                }
             }
             else
             {
