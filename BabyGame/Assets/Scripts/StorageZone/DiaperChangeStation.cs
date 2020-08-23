@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class DiaperChangeStation : StorageZone
 {
-    public float timeToRefreshNeed = 5f;
-    public float timeLeft;
-
-    private bool staionLocked = false;
-
     private Diaper diaper = null;
     private AbstractBaby baby = null;
 
@@ -26,7 +21,7 @@ public class DiaperChangeStation : StorageZone
         {
             if (baby.hasNeed(ENeedType.Poop))
             {
-                staionLocked = true;
+                stationLocked = true;
                 if (timeLeft > 0)
                 {
                     timeLeft -= Time.deltaTime;
@@ -34,8 +29,8 @@ public class DiaperChangeStation : StorageZone
                 else
                 {
                     baby.satisfyNeed(ENeedType.Poop);
-                    timeToRefreshNeed = 5f;
-                    staionLocked = false;
+                    timeLeft = timeToRefreshNeed;
+                    stationLocked = false;
                     Destroy(diaper.gameObject);
                     diaper = null;
                 }
@@ -47,7 +42,7 @@ public class DiaperChangeStation : StorageZone
 
     public override Item pickItem()
     {
-        if (!staionLocked)
+        if (!stationLocked)
         {
             if (baby != null)
             {

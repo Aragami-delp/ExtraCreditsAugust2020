@@ -7,17 +7,11 @@ public class StorageZone : MonoBehaviour
 {
     public int maxSize = 1;
     public List<Item> itemList = new List<Item>(0);
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] protected float timeToRefreshNeed = 5f;
+    protected float timeLeft;
+
+    protected bool stationLocked = false;
 
     public bool addItem(Item item)
     {

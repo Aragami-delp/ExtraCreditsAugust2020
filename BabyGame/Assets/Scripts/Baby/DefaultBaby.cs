@@ -10,6 +10,7 @@ class DefaultBaby : AbstractBaby
         base.Start();
         addNeed(new Need(ENeedType.Poop, 10));
         addNeed(new Need(ENeedType.Hunger, 10));
+        addNeed(new Need(ENeedType.Sleep, 20));
     }
 
 
