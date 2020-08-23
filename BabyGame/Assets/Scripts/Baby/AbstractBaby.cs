@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Baby;
-using Assets.Scripts.Baby.Need;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractBaby : Item
@@ -12,6 +10,11 @@ public abstract class AbstractBaby : Item
 
     private List<Need> needs = new List<Need>();
     [HideInInspector] public Collider2D m_collider;
+
+#pragma warning disable CS0649
+    [SerializeField] private GameObject healthBarPrefab;
+    [SerializeField] private Canvas babyCanvas;
+
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -81,6 +84,11 @@ public abstract class AbstractBaby : Item
     protected void addNeed(Need needToAdd)
     {
         needs.Add(needToAdd);
+        GameObject healthBar = Instantiate(healthBarPrefab, this.transform.position, new Quaternion());
+        healthBar.transform.parent = babyCanvas.transform;
+        healthBar.transform.position = babyCanvas.transform.position;
+
+
     }
 
     public override Item PickItem()

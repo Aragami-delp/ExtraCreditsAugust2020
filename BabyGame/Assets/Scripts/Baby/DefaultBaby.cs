@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Baby;
-using Assets.Scripts.Baby.Need;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 class DefaultBaby : AbstractBaby
