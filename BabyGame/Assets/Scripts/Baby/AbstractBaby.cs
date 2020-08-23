@@ -10,7 +10,6 @@ public abstract class AbstractBaby : Item
     private float needSpeedMultiplier = 1f;
     public bool isCrying = false;
 
-    private Mother mother;
     private List<Need> needs = new List<Need>();
     [HideInInspector] public Collider2D m_collider;
 
@@ -82,11 +81,6 @@ public abstract class AbstractBaby : Item
     protected void addNeed(Need needToAdd)
     {
         needs.Add(needToAdd);
-    }
-
-    public Mother getMother()
-    {
-        return mother;
     }
 
     public override Item PickItem()

@@ -38,7 +38,7 @@ public class Mother : MonoBehaviour
 
     public bool isMyBaby(AbstractBaby baby)
     {
-        return gameObject.Equals(baby);
+        return this.baby.Equals(baby);
     }
 
     public void setState(EMotherState state)

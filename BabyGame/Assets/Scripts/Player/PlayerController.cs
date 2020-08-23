@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
 #pragma warning disable CS0649
     [SerializeField, Tooltip("Position where items should be held at")] private Transform handTransform;
     public Item m_itemInHand { get; private set; } // For example a Baby
-    private bool m_canPickUp = false; // Pickup is needed in collision, but OnCollisionStay2D isn't called each frame so input will also be asked in Update
 
     private void Start()
     {
@@ -32,12 +31,10 @@ public class PlayerController : MonoBehaviour
             {
                 if (toInteract.CompareTag("Item"))
                 {
-                    m_canPickUp = false;
                     PickUpItem(toInteract.GetComponent<Item>().PickItem());
                 }
                 else if (toInteract.CompareTag("StorageZone"))
                 {
-                    m_canPickUp = false;
                     PickUpItem(toInteract.GetComponent<StorageZone>().pickItem());
                 }
             }
