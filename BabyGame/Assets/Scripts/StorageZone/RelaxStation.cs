@@ -39,6 +39,7 @@ public class BabySpots
 
 public class RelaxStation : StorageZone
 {
+#pragma warning disable CS0649
     [SerializeField] private List<BabySpots> babySpots;
 
     private void OnTriggerEnter2D(Collider2D _other)
@@ -78,7 +79,7 @@ public class RelaxStation : StorageZone
 
     private void OnTriggerExit2D(Collider2D _other)
     {
-        if (_other.CompareTag("Item"))
+        if (!_other.isTrigger && _other.CompareTag("Item"))
         {
             AbstractBaby oldBaby = _other.GetComponent<AbstractBaby>();
             if (oldBaby != null)

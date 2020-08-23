@@ -15,7 +15,7 @@ public class StorageZone : MonoBehaviour
 
     public bool addItem(Item item)
     {
-        if (item.GetComponent<Item>() != null && !isFull())
+        if (item.GetComponent<Item>() != null && !isFull)
         {
             this.itemList.Add(item);
             return true;
@@ -27,9 +27,9 @@ public class StorageZone : MonoBehaviour
         }
     }
 
-    public bool removeItem(Item item)
+    public void removeItem(Item item)
     {
-        return itemList.Remove(item);
+        itemList.Remove(item);
     }
 
     public Item getItem(int index)
@@ -44,17 +44,9 @@ public class StorageZone : MonoBehaviour
         }
     }
 
-    public List<Item> getItems
+    public virtual bool isFull
     {
-        get
-        {
-            return itemList;
-        }
-    }
-
-    public bool isFull()
-    {
-        return itemList.Count >= maxSize;
+        get { return itemList.Count >= maxSize; }
     }
 
     public virtual Item pickItem()

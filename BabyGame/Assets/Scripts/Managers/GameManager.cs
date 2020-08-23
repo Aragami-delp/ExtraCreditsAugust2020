@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public float maxTimeBetweenMothers = 10f;
     public float minTimeBetweenMothers = 5f;
     public StorageZone starterZone;
-    public StorageZone returnZone;
+    public ReturnZone returnZone;
 #pragma warning disable CS0649
     [SerializeField] private GameObject babyPrefab;
 #pragma warning disable CS0649
@@ -33,14 +33,14 @@ public class GameManager : MonoBehaviour
     {
         generateNewMother();
         fillUpStarterZone();
-        mockMove();
+        //mockMove();
         updateMotherTime();
         pickUpReturnZone();
     }
 
     private void mockMove()
     {
-        if (starterZone.isFull() && !returnZone.isFull())
+        if (starterZone.isFull && !returnZone.isFull)
         {
             Item baby = starterZone.getItem(0);
 
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void fillUpStarterZone()
     {
-        if (!starterZone.isFull()) {
+        if (!starterZone.isFull) {
             foreach (Mother mother in mothers)
             {
                 if (mother.getState().Equals(EMotherState.GIVE_UP_LINE))
@@ -105,17 +105,17 @@ public class GameManager : MonoBehaviour
         {
             if (mothers[i].getState().Equals(EMotherState.RETURN_LINE))
             {
-                if (returnZone.isFull())
+                if (returnZone.isFull)
                 {
-                    if (mothers[i].isMyBaby((AbstractBaby) returnZone.getItem(0)))
+                    if (mothers[i].isMyBaby(returnZone.GetBaby()))
                     {
                         //Here should be a point System that adds points if the baby isn't crying
                         Mother pickUpMother = mothers[i];
                         mothers.RemoveAt(i);
-                        Item baby = returnZone.getItem(0);
+                        AbstractBaby baby = returnZone.GetBaby();
 
-                        returnZone.removeItem(baby);
-                        Destroy(baby);
+                        returnZone.RemoveBaby();
+                        Destroy(baby.gameObject);
                         Debug.Log("Picked up baby");
                         Destroy(pickUpMother.gameObject);
                     }
