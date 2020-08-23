@@ -28,16 +28,21 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (toInteract.CompareTag("Item"))
+            if (toInteract != null)
             {
-                m_canPickUp = false;
-                PickUpItem(toInteract.GetComponent<Item>().PickItem());
+                if (toInteract.CompareTag("Item"))
+                {
+                    m_canPickUp = false;
+                    PickUpItem(toInteract.GetComponent<Item>().PickItem());
+                }
+                else if (toInteract.CompareTag("StorageZone"))
+                {
+                    m_canPickUp = false;
+                    PickUpItem(toInteract.GetComponent<StorageZone>().pickItem());
+                }
             }
-            else if (toInteract.CompareTag("StorageZone"))
-            {
-                m_canPickUp = false;
-                PickUpItem(toInteract.GetComponent<StorageZone>().pickItem());
-            }
+            else
+                Debug.LogWarning("Player has nothing to interact with!");
         }
 
 
@@ -83,7 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             Item retVal = m_itemInHand;
             m_itemInHand.transform.parent = null;
-            
+
             if (toInteract != null && toInteract.CompareTag("StorageZone"))
             {
                 if (!toInteract.GetComponent<StorageZone>().dropItem(retVal))
