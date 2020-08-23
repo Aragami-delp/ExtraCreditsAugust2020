@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class FoodStation : StorageZone
 {
-    public float timeToRefreshNeed = 5f;
-    public float timeLeft;
-
-    private bool staionLocked = false;
-
     private BabyBottle babbyBottle = null;
     private AbstractBaby baby = null;
 
@@ -26,7 +21,7 @@ public class FoodStation : StorageZone
         {
             if (baby.hasNeed(ENeedType.Hunger))
             {
-                staionLocked = true;
+                stationLocked = true;
                 if (timeLeft > 0)
                 {
                     timeLeft -= Time.deltaTime;
@@ -34,8 +29,8 @@ public class FoodStation : StorageZone
                 else
                 {
                     baby.satisfyNeed(ENeedType.Hunger);
-                    timeToRefreshNeed = 5f;
-                    staionLocked = false;
+                    timeLeft = timeToRefreshNeed;
+                    stationLocked = false;
                     Destroy(babbyBottle.gameObject);
                     babbyBottle = null;
                 }
@@ -47,7 +42,7 @@ public class FoodStation : StorageZone
 
     public override Item pickItem()
     {
-        if (!staionLocked)
+        if (!stationLocked)
         {
             if (baby != null)
             {

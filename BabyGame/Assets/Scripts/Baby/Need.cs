@@ -20,7 +20,6 @@ namespace Assets.Scripts.Baby.Need
             this.type = type;
             this.maxTime = maxTime;
             this.timeLeft = maxTime;
-
         }
 
         public float getMaxTime()
