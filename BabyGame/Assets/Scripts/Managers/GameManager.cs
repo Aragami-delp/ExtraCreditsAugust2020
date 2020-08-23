@@ -114,8 +114,8 @@ public class GameManager : MonoBehaviour
                         mothers.RemoveAt(i);
                         AbstractBaby baby = returnZone.GetBaby();
 
-                        returnZone.RemoveBaby();
-                        Destroy(baby.gameObject);
+                        returnZone.removeItem(baby);
+                        Destroy(baby);
                         Debug.Log("Picked up baby");
                         Destroy(pickUpMother.gameObject);
                     }

@@ -5,57 +5,56 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Baby.Need
+public class Need
 {
-    public class Need
+    private ENeedType type;
+
+    private float maxTime;
+    private float timeLeft;
+
+    public Need(ENeedType type, float maxTime)
     {
-        private ENeedType type;
+        this.type = type;
+        this.maxTime = maxTime;
+        this.timeLeft = maxTime;
 
-        private float maxTime;
-        private float timeLeft;
+    }
 
+    public float getMaxTime()
+    {
+        return maxTime;
+    }
 
-        public Need(ENeedType type , float maxTime)
+    public float getTimeLeft()
+    {
+        return timeLeft;
+    }
+
+    public bool isMet()
+    {
+        if (timeLeft > 0)
         {
-            this.type = type;
-            this.maxTime = maxTime;
-            this.timeLeft = maxTime;
+            return true;
         }
-
-        public float getMaxTime()
+        else
         {
-            return maxTime;
-        }
-
-        public float getTimeLeft()
-        {
-            return timeLeft;
-        }
-
-        public bool isMet()
-        {
-            if (timeLeft > 0)
-            {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-
-        public ENeedType getType()
-        {
-            return type;
-        }
-
-        public void refreshTime()
-        {
-            timeLeft = maxTime;
-        }
-
-        public void removeTime(float timeToRemove)
-        {
-            timeLeft -= timeToRemove;
+            return false;
         }
     }
+
+    public ENeedType getType()
+    {
+        return type;
+    }
+
+    public void refreshTime()
+    {
+        timeLeft = maxTime;
+    }
+
+    public void removeTime(float timeToRemove)
+    {
+        timeLeft -= timeToRemove;
+    }
 }
+

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Baby
+public enum ENeedType
 {
-    public enum ENeedType
-    {
-       Hunger,
-       Poop,
-       Sleep
-    }
+    Hunger,
+    Poop,
+    Sleep
 }
+
